@@ -19,6 +19,7 @@ func withJSONBody(body any) (requestOption, error) {
 	if err := json.NewEncoder(&buf).Encode(body); err != nil {
 		return nil, err
 	}
+
 	return func(r *http.Request) {
 		r.Body = io.NopCloser(&buf)
 		r.ContentLength = int64(buf.Len())

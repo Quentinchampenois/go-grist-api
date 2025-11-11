@@ -5,9 +5,10 @@ package main
 
 import (
 	"fmt"
-	"github.com/quentinchampenois/go-grist-api/examples"
 	"os"
 	"os/exec"
+
+	"github.com/quentinchampenois/go-grist-api/examples"
 )
 
 // Default target to run when none is specified
@@ -53,6 +54,14 @@ func Workspaces() error {
 	os.Stdout.Sync()
 
 	examples.WorkspacesExample()
+	return nil
+}
+
+func Docs() error {
+	fmt.Fprintln(os.Stdout, "Running ...")
+	os.Stdout.Sync()
+
+	examples.DocsExample()
 	return nil
 }
 

@@ -87,7 +87,7 @@ func WorkspacesExample() {
 	fmt.Println("Document: ", newDoc)
 
 	fmt.Println("Modifying metadata document...")
-	modified, err := newDoc.ModifyMetadataDoc(gc, "Updated name", true)
+	modified, err := newDoc.ModifyDoc(gc, "Updated name", true)
 	if err != nil {
 		panic(err)
 	}
@@ -95,7 +95,7 @@ func WorkspacesExample() {
 	fmt.Println("Metadata document modified: ", *modified)
 
 	fmt.Println("Deleting document...")
-	err = newDoc.Delete(gc)
+	err = newDoc.DeleteDoc(gc)
 	if err != nil {
 		panic(err)
 	}

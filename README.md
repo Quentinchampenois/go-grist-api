@@ -9,9 +9,18 @@ Use Grist API natively with Go.
 * Have a running Grist instance 
 `$ docker compose up -d -f build/docker-compose.yml`
 
-Run examples locally 
-`$ GRIST_API_KEY=<API_KEY_FROM_GRIST> mage orgs`
-`$ GRIST_API_KEY=<API_KEY_FROM_GRIST> mage worskpaces`
+Run examples locally   
+```bash
+
+1. Manage orgs
+$ GRIST_API_KEY=<API_KEY_FROM_GRIST> mage orgs
+
+2. Manage workspaces
+$ GRIST_API_KEY=<API_KEY_FROM_GRIST> mage workspaces
+
+2. Manage docs
+$ GRIST_API_KEY=<API_KEY_FROM_GRIST> mage docs
+```
 
 * `GRIST_API_KEY` must be generated directly from Grist settings on the WebUI
 
@@ -21,7 +30,7 @@ TODO:
   * Describe ✅
   * Modify ✅
   * Delete ✅
-  * List users access ⚠️ (API does not match documentation, open PR if needed)
+  * List users access ⚠️
   * Edit users access 🛑
 * Workspaces 
     * List ✅
@@ -32,8 +41,8 @@ TODO:
     * Describe ✅
     * ModifyMetadata ✅
     * Delete ✅
+    * CreateTables ✅
 * Records 🛑
-* Tables 🛑
 * Columns 🛑
 * Attachments 🛑
 * Webhooks 🛑
