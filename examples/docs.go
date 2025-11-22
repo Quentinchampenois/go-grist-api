@@ -70,8 +70,8 @@ func DocsExample() {
 		fmt.Println(table.ID)
 	}
 
-	newTables := &grist.Tables{
-		Tables: []grist.Table{
+	newTablesWithColumns := &grist.TablesWithColumns{
+		Tables: []grist.TableWithColumns{
 			{
 				ID: "Contributors",
 				Columns: []grist.Column{
@@ -84,7 +84,7 @@ func DocsExample() {
 		},
 	}
 
-	newTables, err = doc.CreateTables(gc, *newTables)
+	newTables, err := doc.CreateTables(gc, *newTablesWithColumns)
 	if err != nil {
 		fmt.Printf("error creating tables: %v: ", err)
 		return

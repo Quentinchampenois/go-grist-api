@@ -17,6 +17,19 @@ type Table struct {
 	Columns []Column    `json:"columns,omitempty"`
 	Records []Record    `json:"records,omitempty"`
 }
+
+// TablesWithColumns represents a table in a Grist document.
+// source: https://support.getgrist.com/code/interfaces/DocApiTypes.TablePost/
+type TablesWithColumns struct {
+	Tables []TableWithColumns `json:"tables"`
+}
+
+// TableWithColumns represents a table in a Grist document.
+// source: https://support.getgrist.com/code/interfaces/DocApiTypes.TablePost/
+type TableWithColumns struct {
+	ID      string   `json:"id"`
+	Columns []Column `json:"columns,omitempty"`
+}
 type Record struct {
 	ID     int                   `json:"id,omitempty"`
 	Fields map[string]*CellValue `json:"fields"`
@@ -47,7 +60,7 @@ func (d *Doc) ListTables(c *Client) (*Tables, error) {
 	return &t, nil
 }
 
-func (d *Doc) CreateTables(c *Client, obj Tables) (*Tables, error) {
+func (d *Doc) CreateTables(c *Client, obj TablesWithColumns) (*Tables, error) {
 	endpoint := buildURL(c.ApiEndpoint(), pathListTables(d.ID))
 
 	jsonBody, err := withJSONBody(obj)

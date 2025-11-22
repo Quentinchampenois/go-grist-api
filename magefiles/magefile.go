@@ -95,7 +95,7 @@ func Clean() {
 			panic(err)
 		}
 
-		fmt.Println("Workspace '%s' deleted.", ws.Name)
+		fmt.Printf("Workspace '%s' deleted.", ws.Name)
 	}
 
 	os.RemoveAll(BinaryName)
