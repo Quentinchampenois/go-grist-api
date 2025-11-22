@@ -4,10 +4,12 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"os/exec"
 
+	"github.com/quentinchampenois/go-grist-api"
 	"github.com/quentinchampenois/go-grist-api/examples"
 )
 
@@ -67,6 +69,34 @@ func Docs() error {
 
 // Clean up after yourself
 func Clean() {
-	fmt.Println("Cleaning...")
+	fmt.Println("Cleaning grist...")
+	endpoint := "http://localhost:8484"
+	apiKey := os.Getenv("GRIST_API_KEY")
+
+	ctx := context.Background()
+	gc, err := grist.NewGristClient(ctx, endpoint, apiKey)
+	if err != nil {
+		panic(err)
+	}
+	orgs, err := grist.ListOrgs(gc)
+	if err != nil {
+		panic(err)
+	}
+
+	if len(orgs) < 1 {
+		panic("No organizations found.")
+	}
+	org := orgs[0]
+
+	workspaces, err := grist.ListWorkspaces(gc, org.ID)
+	for _, ws := range workspaces {
+		err = ws.Delete(gc)
+		if err != nil {
+			panic(err)
+		}
+
+		fmt.Println("Workspace '%s' deleted.", ws.Name)
+	}
+
 	os.RemoveAll(BinaryName)
 }

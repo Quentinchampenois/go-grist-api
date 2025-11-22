@@ -109,7 +109,7 @@ func DocsExample() {
 	surname := "@janedoe"
 	contributions := float64(99)
 	recordsObj := grist.Records{
-		Records: []grist.RecordPost{
+		Records: []grist.Record{
 			{
 				Fields: map[string]*grist.CellValue{
 					"name": {

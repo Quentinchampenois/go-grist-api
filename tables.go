@@ -18,16 +18,12 @@ type Table struct {
 	Records []Record    `json:"records,omitempty"`
 }
 type Record struct {
-	ID string `json:"id"`
+	ID     int                   `json:"id,omitempty"`
+	Fields map[string]*CellValue `json:"fields"`
 }
 type TableFields struct {
 	TableRef int  `json:"tableRef"`
 	OnDemand bool `json:"onDemand"`
-}
-
-type RecordPost struct {
-	ID     int                   `json:"id,omitempty"`
-	Fields map[string]*CellValue `json:"fields"`
 }
 
 func pathListTables(docID string) string {

@@ -6,7 +6,7 @@ import (
 )
 
 type Records struct {
-	Records []RecordPost `json:"records"`
+	Records []Record `json:"records"`
 }
 
 func pathListRecods(docID, tableID string) string {

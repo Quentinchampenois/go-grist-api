@@ -30,7 +30,7 @@ func pathWorkspaceDocs(wsID int64) string {
 // ListWorkspaces lists workspaces for an org.
 func ListWorkspaces(c *Client, orgId int64) ([]Workspace, error) {
 	endpoint := buildURL(c.ApiEndpoint(), pathOrgWorkspaces(orgId))
-	fmt.Println(endpoint)
+
 	resp, err := c.GetRequest(
 		endpoint,
 		withAuth(c.ApiKey),
@@ -143,8 +143,8 @@ func (ws *Workspace) Delete(c *Client) error {
 		return err
 	}
 
-	// Accept 200 OK and 204 No Content
-	if err := handleStatus(resp, http.StatusOK); err != nil {
+	err = handleStatus(resp, http.StatusOK)
+	if err != nil {
 		return err
 	}
 	return nil
