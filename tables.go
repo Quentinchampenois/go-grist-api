@@ -9,11 +9,13 @@ type Tables struct {
 	Tables []Table `json:"tables"`
 }
 
+// Table represents a table in a Grist document.
+// source: https://support.getgrist.com/code/interfaces/DocApiTypes.TablePost/
 type Table struct {
 	ID      string      `json:"id"`
-	Fields  TableFields `json:"fields"`
-	Columns []Column    `json:"columns"`
-	Records []Record    `json:"records"`
+	Fields  TableFields `json:"fields,omitempty"`
+	Columns []Column    `json:"columns,omitempty"`
+	Records []Record    `json:"records,omitempty"`
 }
 type Record struct {
 	ID string `json:"id"`
@@ -23,35 +25,16 @@ type TableFields struct {
 	OnDemand bool `json:"onDemand"`
 }
 
-type TablePostObj struct {
-	Tables []TablePost `json:"tables"`
-}
-
-// TablePost represents a table to be created in Grist
-// source: https://support.getgrist.com/code/interfaces/DocApiTypes.TablePost/
-type TablePost struct {
-	ID      string       `json:"id"`
-	Records []RecordPost `json:"records,omitempty"`
-	Columns []ColumnPost `json:"columns,omitempty"`
-}
-
 type RecordPost struct {
 	ID     int                   `json:"id,omitempty"`
 	Fields map[string]*CellValue `json:"fields"`
-}
-
-type ColumnPost struct {
-	ID     string               `json:"id,omitempty"`
-	Label  string               `json:"label,omitempty"`
-	Type   string               `json:"type,omitempty"`
-	Fields map[string]CellValue `json:"fields,omitempty"`
 }
 
 func pathListTables(docID string) string {
 	return pathDescribeDocs(docID) + "/tables"
 }
 
-func (d *Doc) ListTables(c *Client) ([]Table, error) {
+func (d *Doc) ListTables(c *Client) (*Tables, error) {
 	endpoint := buildURL(c.ApiEndpoint(), pathListTables(d.ID))
 	resp, err := c.GetRequest(
 		endpoint,
@@ -65,10 +48,10 @@ func (d *Doc) ListTables(c *Client) ([]Table, error) {
 	if err := handleJSONResponse(resp, &t, http.StatusOK); err != nil {
 		return nil, err
 	}
-	return t.Tables, nil
+	return &t, nil
 }
 
-func (d *Doc) CreateTables(c *Client, obj TablePostObj) (*Tables, error) {
+func (d *Doc) CreateTables(c *Client, obj Tables) (*Tables, error) {
 	endpoint := buildURL(c.ApiEndpoint(), pathListTables(d.ID))
 
 	jsonBody, err := withJSONBody(obj)

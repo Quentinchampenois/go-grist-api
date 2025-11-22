@@ -10,8 +10,10 @@ type Columns struct {
 }
 
 type Column struct {
-	ID     string  `json:"id"`
-	Fields []Field `json:"fields"`
+	ID     string               `json:"id,omitempty"`
+	Label  string               `json:"label,omitempty"`
+	Type   string               `json:"type,omitempty"`
+	Fields map[string]CellValue `json:"fields,omitempty"`
 }
 
 type Field struct {

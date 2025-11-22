@@ -66,15 +66,15 @@ func DocsExample() {
 		return
 	}
 
-	for _, table := range tables {
+	for _, table := range tables.Tables {
 		fmt.Println(table.ID)
 	}
 
-	gristObj := grist.TablePostObj{
-		Tables: []grist.TablePost{
+	newTables := &grist.Tables{
+		Tables: []grist.Table{
 			{
 				ID: "Contributors",
-				Columns: []grist.ColumnPost{
+				Columns: []grist.Column{
 					{ID: "name", Label: "Name", Type: "Text"},
 					{ID: "surname", Label: "Surname", Type: "Text"},
 					{ID: "contributions", Label: "Contributions", Type: "Numeric"},
@@ -84,7 +84,7 @@ func DocsExample() {
 		},
 	}
 
-	newTables, err := doc.CreateTables(gc, gristObj)
+	newTables, err = doc.CreateTables(gc, *newTables)
 	if err != nil {
 		fmt.Printf("error creating tables: %v: ", err)
 		return
