@@ -28,7 +28,7 @@ type TablesWithColumns struct {
 // source: https://support.getgrist.com/code/interfaces/DocApiTypes.TablePost/
 type TableWithColumns struct {
 	ID      string   `json:"id"`
-	Columns []Column `json:"columns,omitempty"`
+	Columns []Column `json:"columns"`
 }
 type Record struct {
 	ID     int                   `json:"id,omitempty"`
