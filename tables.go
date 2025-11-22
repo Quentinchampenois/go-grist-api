@@ -23,7 +23,7 @@ type TableFields struct {
 	OnDemand bool `json:"onDemand"`
 }
 
-type RequestGristObj struct {
+type TablePostObj struct {
 	Tables []TablePost `json:"tables"`
 }
 
@@ -36,8 +36,8 @@ type TablePost struct {
 }
 
 type RecordPost struct {
-	ID     string               `json:"id,omitempty"`
-	Fields map[string]CellValue `json:"fields"`
+	ID     int                   `json:"id,omitempty"`
+	Fields map[string]*CellValue `json:"fields"`
 }
 
 type ColumnPost struct {
@@ -68,7 +68,7 @@ func (d *Doc) ListTables(c *Client) ([]Table, error) {
 	return t.Tables, nil
 }
 
-func (d *Doc) CreateTables(c *Client, obj RequestGristObj) ([]string, error) {
+func (d *Doc) CreateTables(c *Client, obj TablePostObj) (*Tables, error) {
 	endpoint := buildURL(c.ApiEndpoint(), pathListTables(d.ID))
 
 	jsonBody, err := withJSONBody(obj)
@@ -82,7 +82,7 @@ func (d *Doc) CreateTables(c *Client, obj RequestGristObj) ([]string, error) {
 		withAuth(c.ApiKey),
 		jsonBody,
 	)
-	fmt.Println()
+
 	if err != nil {
 		return nil, err
 	}
@@ -91,5 +91,6 @@ func (d *Doc) CreateTables(c *Client, obj RequestGristObj) ([]string, error) {
 	if err := handleJSONResponse(resp, &t, http.StatusOK); err != nil {
 		return nil, err
 	}
-	return []string{}, nil
+
+	return &t, nil
 }

@@ -75,6 +75,7 @@ func (c *CellValue) UnmarshalJSON(data []byte) error {
 }
 
 func (c *CellValue) MarshalJSON() ([]byte, error) {
+	fmt.Println("MarshalJSON")
 	switch {
 	case c.Number != nil:
 		return json.Marshal(*c.Number)

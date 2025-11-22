@@ -34,7 +34,7 @@ func withAuth(apiKey string) requestOption {
 	}
 }
 
-// doRequest performs an HTTP request with the given options
+// DoRequest performs an HTTP request with the given options
 func (c *Client) DoRequest(method, endpoint string, opts ...requestOption) (*http.Response, error) {
 	req, err := http.NewRequestWithContext(c.Context, method, endpoint, nil)
 	if err != nil {
@@ -45,6 +45,7 @@ func (c *Client) DoRequest(method, endpoint string, opts ...requestOption) (*htt
 		opt(req)
 	}
 
+	fmt.Println(req.Body)
 	return c.HTTPClient.Do(req)
 }
 
